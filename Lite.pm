@@ -87,7 +87,7 @@ CGI::Lite - Perl module to process and decode WWW forms and cookies.
     $decoded_string = url_decode ($string);
 
     $status = is_dangerous ($string);
-    $safe_string = escape_dangerous_chars ($string);
+    $safe_string = escape_dangerous_chars ($string); # ***use is discouraged***
 
 =head1 DESCRIPTION
 
@@ -400,7 +400,15 @@ I<Return Value>
 
 =item B<escape_dangerous_chars>
 
-You can use this method to "escape" any dangerous meta-characters.
+You can use this method to "escape" any dangerous meta-characters. The
+use of this function is strongly discouraged. See
+http://use.perl.org/~cbrooks/journal/10542 and
+http://msgs.securepoint.com/cgi-bin/get/bugtraq0302/94.html for an
+advisory by Ronald F. Guilmette. Ronald's patch to make this function
+more safe is applied, but as has been pointed out on the bugtraq
+mailing list, it is still much better to run no external shell at all
+when executing commands. Please read the advisory and the WWW security
+FAQ.
 
 I<Return Value>
 
@@ -475,7 +483,7 @@ require Exporter;
 ## Global Variables
 ##--
 
-$CGI::Lite::VERSION = '2.0'; # BDL
+$CGI::Lite::VERSION = '2.001'; # BDL
 
 ##++
 ##  Start
@@ -868,7 +876,8 @@ sub escape_dangerous_chars
 {
     my $string = shift;
 
-    $string =~ s/([;<>\*\|`&\$!#\(\)\[\]\{\}:'"])/\\$1/g;
+    warn "escape_dangerous_chars() possibly dangerous. Its use is discouraged";
+    $string =~ s/([;<>\*\|`&\$!#\(\)\[\]\{\}:'"\\\?\~\^\r\n])/\\$1/g;
 
     return $string;
 }
