@@ -1,5 +1,5 @@
 MANIFEST                        This File
-HISTORY                         Revision History
+CHANGES                         Revision History
 README                          Readme File
 Lite.pm                         CGI::Lite Module
 Makefile.PL                     Makefile Generator

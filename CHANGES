@@ -1,13 +1,58 @@
+* v2.02 - May 18, 2003
 
-* v2.0 - 20 Aug 2000 b.d.low@ieee.org
+I've taken over CGI::Lite.  Thanks to Andreas for making the security release,
+and ensuring the transfer went so well.
+
+url_decode now interprets "+"s correctly, as encoded spaces.
+
+url_encode ensures that all hex-encodings are padded correctly, to 2 digits (so
+"%09" for a tab, not "%9").  The fake-encoding done on standard input when
+testing at the command-line has been fixed equivalently.
+
+url_encode also converts spaces to "+"s and emits hex characters in upper-case,
+since this what web-browsers seem to do.  Encoding is now performed on all but
+known-safe characters, rather listing all the characters believed to be in need
+of encoding.
+
+The internal method _decode_url_encoded_data now uses url_decode, rather than
+duplicating its content.
+
+Thanks to Aaron Crane for the above fixes.
+
+This file has been renamed from HISTORY to CHANGES, with the hope that that
+will make it show up on search.cpan.org.
+
+More development of this module is planned.  I'm making this release now to get
+those bug fixes available as soon as possible, and to get the hang of making a
+CPAN release.  Future changes will have tickets in the CPAN Request Tracker
+queue for this distribution.
+
+(The version number v2.01 has been skipped, to avoid possible confusion with
+v2.001.)
+
+Smylers <smylers@cpan.org> 
+
+
+* v2.001 - Feb 17, 2003
+
+This 2.001 release is just an emergency release that fixes the most urgent
+security need. It is not endorsed by the original author. It was put together
+by me after the advisory on the bugtraq mailing list:
+
+  http://msgs.securepoint.com/cgi-bin/get/bugtraq0302/94.html
+  
+Thanks to Ronald F. Guilmette for bringing up this issue.
+
+andreas koenig
+
+* v2.0 - Aug 20, 2000 b.d.low@ieee.org
 
 I (Ben Low) have assumed maintenance over CGI_Lite. First point of action 
 (and probably last, the module is quite stable both bug- and feature-wise :-) 
 is to change the name to fit in with perl's module naming conventions: 
 CGI_Lite is dead, long live CGI::Lite.
 
-
-* v1.9 - 31 Jan, 1999, 17 Apr 2000 BDL
+* v1.9 - Jan 31, 1999; Apr 17, 2000 BDL
 
 Added parse_new_form_data(), for use under persistant applications 
 (e.g. FCGI, mod_perl). This function simply clears the CGI object's 

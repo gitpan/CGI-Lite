@@ -1,53 +1,17 @@
-Note from the CPAN administration: The CGI::Lite module seems to be
-abandoned by its original author. We cannot contact him anymore. The
-2.0 release has been made on 2000-08-20. This 2.001 release is just an
-emergency release that fixes the most urgent security need. It is not
-endorsed by the original author. It was put together by me after the
-advisory http://msgs.securepoint.com/cgi-bin/get/bugtraq0302/94.html
-on the bugtraq mailing list. Thanks to Ronald F. Guilmette for
-bringing up this issue.
+CGI::Lite v2.02
+----------------
 
-I do not and will not maintain CGI::Lite and would welcome volunteers
-to take it over.
-
-2002-02-17
-andreas koenig
-
-
-CGI::Lite v2.0
---------------
-
-You can use this module to decode form and query information, including
-file uploads, as well as cookies in a very simple manner; you need not
-concern yourself with the actual details behind the decoding process.
+You can use this module to decode form and query information, including file
+uploads, as well as cookies in a very simple manner; you need not concern
+yourself with the actual details behind the decoding process.
 
 Here are the changes for this version:
 
-Name change: the module once known as CGI_Lite is now CGI::Lite.
+Bugs in url_encode and url_decode have been fixed: they now correctly encode
+and decode data that was previously treated incorrectly.
 
+Here are the changes for the previous version, 2.001:
 
-Here are the changes for previous versions:
+This is just an emergency release that fixes the most urgent security need.
 
-1.9
-In order to use CGI_Lite in a persistant application (e.g. using FCGI
-or mod_perl), each new request must be parsed afresh - that is, the CGI
-object's state needs to be reset for each request. The new function
-parse_new_form_data() clears the CGI object's state before calling
-parse_form_data().
-
-e.g.
-
-	use FCGI;
-        use CGI_Lite;
-
-	$cgi = new CGI_Lite;
-
-	while(FCGI::accept() >= 0)
-        {
-	    $form = $cgi->parse_new_form_data;
-
-	    print("Content-type: text/html\r\n\r\n");
-
-	    $cgi->print_data;
-        }
-
+See the CHANGES file for full history.

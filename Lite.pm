@@ -1,13 +1,11 @@
 #!/usr/bin/perl
 
 ##++
-##     CGI Lite v2.0
-##     Last modified: 20 Aug 2000 (BDL - see HISTORY)
+##     CGI Lite v2.02
+##     Last modified: 18 Aug 2003 (Smylers - see CHANGES)
 ##
 ##     Copyright (c) 1995, 1996, 1997 by Shishir Gundavaram
 ##     All Rights Reserved
-##
-##     E-Mail: shishir@ora.com
 ##
 ##     Permission  to  use,  copy, and distribute is hereby granted,
 ##     providing that the above copyright notice and this permission
@@ -18,7 +16,7 @@
 
 =head1 NAME
 
-CGI::Lite - Perl module to process and decode WWW forms and cookies.
+CGI::Lite - Process and decode WWW forms and cookies
 
 =head1 SYNOPSIS
 
@@ -425,10 +423,14 @@ CPAN mirror and at his Web site:
 
 I<http://www-genome.wi.mit.edu/WWW/tools/scripting>
 
+=head1 MAINTAINER
+
+Maintenance of this module has now been taken over by Smylers
+<smylers@cpan.org>.
+
 =head1 ACKNOWLEDGMENTS
 
-I'd like to thank the following for finding bugs and offering 
-suggestions:
+The author thanks the following for finding bugs and offering suggestions:
 
 =over 4
 
@@ -456,7 +458,6 @@ suggestions:
 
 =head1 COPYRIGHT INFORMATION
     
-
      Copyright (c) 1995, 1996, 1997 by Shishir Gundavaram
                      All Rights Reserved
 
@@ -483,7 +484,7 @@ require Exporter;
 ## Global Variables
 ##--
 
-$CGI::Lite::VERSION = '2.001'; # BDL
+$CGI::Lite::VERSION = '2.02';
 
 ##++
 ##  Start
@@ -706,7 +707,7 @@ sub parse_form_data
 	chomp (@query_input);
 
 	$query_string = join ('&', @query_input);
-	$query_string =~ s/\\(.)/sprintf ('%%%x', ord ($1))/eg;
+	$query_string =~ s/\\(.)/sprintf ('%%%02X', ord ($1))/eg;
  
 	$self->_decode_url_encoded_data (\$query_string, 'form');
 
@@ -842,20 +843,17 @@ sub url_encode
 {
     my $string = shift;
 
-    $string =~ s/([\x00-\x20"#%;<>?{}|\\\\^~`\[\]\x7F-\xFF])/
-                 sprintf ('%%%x', ord ($1))/eg;
+    $string =~ s/([^-.\w ])/sprintf('%%%02X', ord $1)/ge;
+    $string =~ tr/ /+/;
 
     return $string;
 }
-
-##+
-##  Thanks to Paul Phillips for the meta-character list.
-##--
 
 sub url_decode
 {
     my $string = shift;
 
+    $string =~ tr/+/ /;
     $string =~ s/%([\da-fA-F]{2})/chr (hex ($1))/eg;
 
     return $string;
@@ -932,7 +930,6 @@ sub _decode_url_encoded_data
 	$delimiter = '&';
     }
 
-    $$reference_data =~ tr/+/ /;
     @key_value_pairs = split (/$delimiter/, $$reference_data);
 		
     foreach $key_value (@key_value_pairs) {
@@ -940,8 +937,8 @@ sub _decode_url_encoded_data
 
 	$value = '' unless defined $value;	# avoid 'undef' warnings for "key=" BDL Jan/99
 
-	$key   =~ s/%([\da-fA-F]{2})/chr (hex ($1))/eg;
-	$value =~ s/%([\da-fA-F]{2})/chr (hex ($1))/eg;
+	$key   = url_decode($key);
+	$value = url_decode($value);
 	
 	if ( defined ($self->{web_data}->{$key}) ) {
 	    $self->{web_data}->{$key} = [$self->{web_data}->{$key}] 
