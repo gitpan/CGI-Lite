@@ -1,0 +1,37 @@
+CGI::Lite v2.0
+--------------
+
+You can use this module to decode form and query information, including
+file uploads, as well as cookies in a very simple manner; you need not
+concern yourself with the actual details behind the decoding process.
+
+Here are the changes for this version:
+
+Name change: the module once known as CGI_Lite is now CGI::Lite.
+
+
+Here are the changes for previous versions:
+
+1.9
+In order to use CGI_Lite in a persistant application (e.g. using FCGI
+or mod_perl), each new request must be parsed afresh - that is, the CGI
+object's state needs to be reset for each request. The new function
+parse_new_form_data() clears the CGI object's state before calling
+parse_form_data().
+
+e.g.
+
+	use FCGI;
+        use CGI_Lite;
+
+	$cgi = new CGI_Lite;
+
+	while(FCGI::accept() >= 0)
+        {
+	    $form = $cgi->parse_new_form_data;
+
+	    print("Content-type: text/html\r\n\r\n");
+
+	    $cgi->print_data;
+        }
+
