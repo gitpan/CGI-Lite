@@ -1,17 +1,25 @@
-CGI::Lite v2.02
+CGI::Lite v2.03
 ----------------
+
+Released: 26th May 2014
+
+
+DESCRIPTION
+-----------
 
 You can use this module to decode form and query information, including file
 uploads, as well as cookies in a very simple manner; you need not concern
 yourself with the actual details behind the decoding process.
 
-Here are the changes for this version:
 
-Bugs in url_encode and url_decode have been fixed: they now correctly encode
-and decode data that was previously treated incorrectly.
+NEW IN THIS VERSION
+-------------------
 
-Here are the changes for the previous version, 2.001:
+This is a bug-fix release. These bugs from rt.cpan.org have been fixed:
+6180, 8212, 16236, 29053, 32329, 34827, 38448, 41666.
 
-This is just an emergency release that fixes the most urgent security need.
+Additionally a test suite has been created.
 
 See the CHANGES file for full history.
+
+$Id: README,v 1.2 2014/05/26 15:46:01 pete Exp $

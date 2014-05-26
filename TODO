@@ -1,3 +1,16 @@
+Tasks to perform:
+
+Consider adding a routine to set cookies.
+Decide whether to tighten validation of cookie names.
+Decide on the appropriate action to take when presented with multiple
+cookies with the same name and document it.
+
+Below is Smyler's todo list from 2003.
+
+Pete
+
+================================================================================
+
 The list at the bottom is what I found in this TODO file when I took over this
 module in 2003 August, presumably dating from 2000 or earlier.  I haven't yet
 decided whether I will actually do any of these things.

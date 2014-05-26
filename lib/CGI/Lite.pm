@@ -484,7 +484,7 @@ require Exporter;
 ## Global Variables
 ##--
 
-$CGI::Lite::VERSION = '2.02';
+$CGI::Lite::VERSION = '2.03';
 
 ##++
 ##  Start
@@ -664,55 +664,60 @@ sub parse_form_data
 
     if ($request_method =~ /^(get|head)$/i) {
 
-	$query_string = $ENV{QUERY_STRING};
-	$self->_decode_url_encoded_data (\$query_string, 'form');
+		$query_string = $ENV{QUERY_STRING};
 
-	return wantarray ?
-	    %{ $self->{web_data} } : $self->{web_data};
+		# If for some reason this has been called as a class method instead
+		# of an object method and there's no query string, then give up now.
+		return unless ($query_string or ref $self);
+
+		$self->_decode_url_encoded_data (\$query_string, 'form');
+
+		return wantarray ?
+	    	%{ $self->{web_data} } : $self->{web_data};
 
     } elsif ($request_method =~ /^post$/i) {
 
-	if (!$content_type || 
-	    ($content_type eq 'application/x-www-form-urlencoded')) {
+		if (!$content_type || 
+	    	($content_type =~ /^application\/x-www-form-urlencoded/)) {
 
-	    local $^W = 0;
+	    	local $^W = 0;
 
-	    read (STDIN, $post_data, $content_length);
-	    $self->_decode_url_encoded_data (\$post_data, 'form');
+	    	read (STDIN, $post_data, $content_length);
+	    	$self->_decode_url_encoded_data (\$post_data, 'form');
 
-	    return wantarray ? 
-		%{ $self->{web_data} } : $self->{web_data};
+	    	return wantarray ? 
+				%{ $self->{web_data} } : $self->{web_data};
 
-	} elsif ($content_type =~ /multipart\/form-data/) {
-	    ($boundary) = $content_type =~ /boundary=(\S+)$/;
-	    $self->_parse_multipart_data ($content_length, $boundary);
+		} elsif ($content_type =~ /multipart\/form-data/) {
+	    	($boundary) = $content_type =~ /boundary=(\S+)$/;
+	    	$self->_parse_multipart_data ($content_length, $boundary);
 
-	    return wantarray ? 
-		%{ $self->{web_data} } : $self->{web_data};
+	    	return wantarray ? 
+				%{ $self->{web_data} } : $self->{web_data};
 
-	} else {
-	    $self->_error ('Invalid content type!');
-	}
+		} else {
+	    	$self->_error ('Invalid content type!');
+		}
 
     } else {
 
-	##++
-	##  Got the idea of interactive debugging from CGI.pm, though it's
-        ##  handled a bit differently here. Thanks Lincoln!
-	##--
+		##++
+		##  Got the idea of interactive debugging from CGI.pm, though it's
+        	##  handled a bit differently here. Thanks Lincoln!
+		##--
 
-	print "[ Reading query from standard input. Press ^D to stop! ]\n";
+		print "[ Reading query from standard input. Press ^D to stop! ]\n";
 
-	@query_input = <>;
-	chomp (@query_input);
+		@query_input = <>;
+		chomp (@query_input);
 
-	$query_string = join ('&', @query_input);
-	$query_string =~ s/\\(.)/sprintf ('%%%02X', ord ($1))/eg;
+		$query_string = join ('&', @query_input);
+		$query_string =~ s/\\(.)/sprintf ('%%%02X', ord ($1))/eg;
  
-	$self->_decode_url_encoded_data (\$query_string, 'form');
+		$self->_decode_url_encoded_data (\$query_string, 'form');
 
-	return wantarray ?
-	    %{ $self->{web_data} } : $self->{web_data};
+		return wantarray ?
+	    	%{ $self->{web_data} } : $self->{web_data};
     }
 }
 
@@ -925,9 +930,9 @@ sub _decode_url_encoded_data
     return unless ($$reference_data);
 
     if ($type eq 'cookies') {
-	$delimiter = ';\s+';
+	$delimiter = '[;,]\s*';
     } else {
-	$delimiter = '&';
+	$delimiter = '[;&]';
     }
 
     @key_value_pairs = split (/$delimiter/, $$reference_data);
@@ -936,6 +941,13 @@ sub _decode_url_encoded_data
 	($key, $value) = split (/=/, $key_value, 2);
 
 	$value = '' unless defined $value;	# avoid 'undef' warnings for "key=" BDL Jan/99
+	next unless defined $key;  # avoid 'undef' warnings for bogus URLs like 'foobar.cgi?&foo=bar'  
+	
+	if ($type eq 'cookies') {
+		# Strip leading/trailling whitespace as per RFC 2965
+		$key   =~ s/^\s+|\s+$//g;
+		$value =~ s/^\s+|\s+$//g;
+	}
 
 	$key   = url_decode($key);
 	$value = url_decode($value);
@@ -968,6 +980,7 @@ sub _parse_multipart_data
 
     local $^W = 0;
     $files    = {};
+	$boundary = quotemeta ($boundary); 
 
     $code = <<'End_of_Multipart';
 

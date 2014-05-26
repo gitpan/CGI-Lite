@@ -1,3 +1,34 @@
+* v2.03 - May 25, 2014
+
+Maintainer change: Pete Houston has taken over maintenance from Smylers.
+
+A test suite has been created.
+
+BUG FIX: Cleared up some uninitialised value warnings emitted when query
+	strings are missing an entire key-value pair eg: "&foo=bar" (issue
+	38448).
+
+BUG FIX: If the user calls parse_form_data as a class method without a
+	query string, the method now gives up early and silently
+	(issue 6180).
+
+BUG FIX: In form-data uploads, the boundary string was not properly
+	escaped and therefore would not match when it contained
+	metacharacters (issue 29053).
+
+BUG FIX: The content type for url-encoded forms now matches on the MIME
+	type only, so additional charset fields are allowed (issues 16236,
+	34827 and 41666).
+
+BUG FIX: Leading/trailling whitespace is now stripped from cookie names
+	and values.
+
+BUG FIX: Cookies now no longer need to be separated by whitespace.
+	Commas can now be used as separators too. (issue 32329).
+
+BUG FIX: The semicolon is now a permitted delimiter in the query string
+	along with the ampersand (issue 8212).
+
 * v2.02 - May 18, 2003
 
 I've taken over CGI::Lite.  Thanks to Andreas for making the security release,
