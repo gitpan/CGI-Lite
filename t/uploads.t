@@ -10,9 +10,9 @@
 #        NOTES:  This borrows very heavily from upload.t in CGI.pm
 #       AUTHOR:  Pete Houston (cpan@openstrike.co.uk)
 #      COMPANY:  Openstrike
-#      VERSION:  $Id: uploads.t,v 1.1 2014/05/26 15:40:10 pete Exp $
+#      VERSION:  $Id: uploads.t,v 1.2 2014/06/13 14:07:59 pete Exp $
 #      CREATED:  20/05/14 14:01:34
-#     REVISION:  $Revision: 1.1 $
+#     REVISION:  $Revision: 1.2 $
 #===============================================================================
 
 use strict;
@@ -40,6 +40,7 @@ $ENV{CONTENT_TYPE}    = q#multipart/form-data; boundary=`!"$%^&*()-+[]{}'@.?~\#|
 my $uploaddir = 'tmpcgilite';
 mkdir $uploaddir unless -d $uploaddir;
 
+
 my ($cgi, $form) = post_data ($datafile, $uploaddir);
 
 is ($cgi->is_error, 0, 'Parsing data with POST');
@@ -54,7 +55,7 @@ my @files = qw/100;100_gif 300x300_gif/;
 my @sizes = qw/896 1656/;
 for my $i (0..1) {
 	my $file = "$uploaddir/$form->{$files[$i]}";
-	ok (-e "$file", "Uploaded file exists ($i)");
+	ok (-e "$file", "Uploaded file exists ($i)") or warn "Name = '$file'\n" . $cgi->get_error_message;
 	is ((stat($file))[7], $sizes[$i], "File size check ($i)");
 }
 
@@ -67,6 +68,7 @@ sub post_data {
 		or die "Cannot open test file $datafile: $!";
 	binmode STDIN;
 	my $cgi = CGI::Lite->new;
+	$cgi->set_platform ('DOS') if $^O eq 'MSWin32';
 	$cgi->set_directory ($dir);
 	my $form = $cgi->parse_form_data;
 	close STDIN;

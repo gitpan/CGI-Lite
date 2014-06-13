@@ -1,3 +1,11 @@
+* v2.03_01
+
+The test multi-part upload data in the test suite has been fixed to have
+the correct (CRLF) line terminators. These tests should now pass for
+Microsoft users.
+
+The documentation has been amended to reflect the change of maintainer.
+
 * v2.03 - May 25, 2014
 
 Maintainer change: Pete Houston has taken over maintenance from Smylers.

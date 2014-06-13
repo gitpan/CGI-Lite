@@ -10,21 +10,22 @@
 #        NOTES:  ---
 #       AUTHOR:  Pete Houston (cpan@openstrike.co.uk)
 #      COMPANY:  Openstrike
-#      VERSION:  $Id: basic.t,v 1.1 2014/05/26 15:40:00 pete Exp $
+#      VERSION:  $Id: basic.t,v 1.2 2014/06/13 14:06:01 pete Exp $
 #      CREATED:  13/05/14 21:36:53
-#     REVISION:  $Revision: 1.1 $
+#     REVISION:  $Revision: 1.2 $
 #===============================================================================
 
 use strict;
 use warnings;
 
-use Test::More tests => 289;                      # last test to print
+use Test::More tests => 290;                      # last test to print
 
 use lib './lib';
 
 BEGIN { use_ok ('CGI::Lite') }
 
-is ($CGI::Lite::VERSION, '2.03', 'Version test');
+is ($CGI::Lite::VERSION, '2.03_01', 'Version test');
+is (CGI::Lite::Version (), $CGI::Lite::VERSION, 'Version subroutine test');
 
 my $cgi = CGI::Lite->new ();
 

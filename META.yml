@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               CGI-Lite
-version:            2.03
+version:            2.03_01
 abstract:           Process and decode WWW forms and cookies
 author:
     - Pete Houston (cpan@openstrike.co.uk)

@@ -1,8 +1,7 @@
-#!/usr/bin/perl
-
 ##++
-##     CGI Lite v2.02
-##     Last modified: 18 Aug 2003 (Smylers - see CHANGES)
+##     CGI Lite v2.03_01
+##     Last modified: 13 Jun 2014 (see CHANGES)
+##     $Id: Lite.pm,v 1.3 2014/06/13 14:05:16 pete Exp $
 ##
 ##     Copyright (c) 1995, 1996, 1997 by Shishir Gundavaram
 ##     All Rights Reserved
@@ -425,8 +424,8 @@ I<http://www-genome.wi.mit.edu/WWW/tools/scripting>
 
 =head1 MAINTAINER
 
-Maintenance of this module has now been taken over by Smylers
-<smylers@cpan.org>.
+Maintenance of this module has now been taken over by Pete Houston
+<cpan@openstrike.co.uk>.
 
 =head1 ACKNOWLEDGMENTS
 
@@ -456,6 +455,9 @@ The author thanks the following for finding bugs and offering suggestions:
 
 =back
 
+The present maintainer wishes to thank the previous maintainers:
+Smylers, Andreas, Ben and Shishir.
+
 =head1 COPYRIGHT INFORMATION
     
      Copyright (c) 1995, 1996, 1997 by Shishir Gundavaram
@@ -464,6 +466,8 @@ The author thanks the following for finding bugs and offering suggestions:
  Permission to use, copy, and  distribute  is  hereby granted,
  providing that the above copyright notice and this permission
  appear in all copies and in supporting documentation.
+
+     Changes in versions 2.03 - present copyright 2014 by Pete Houston
 
 =cut
 
@@ -484,7 +488,7 @@ require Exporter;
 ## Global Variables
 ##--
 
-$CGI::Lite::VERSION = '2.03';
+$CGI::Lite::VERSION = '2.03_01';
 
 ##++
 ##  Start
@@ -893,6 +897,9 @@ sub _error
 {
     my ($self, $message) = @_;
 
+	# Skip if we've been called as a class method
+	# because $self is not a hashref in such cases
+	return unless ref $self;
     $self->{error_status}  = 1;
     $self->{error_message} = $message;
 }
@@ -985,7 +992,7 @@ sub _parse_multipart_data
     $code = <<'End_of_Multipart';
 
     my ($seen, $buffer_size, $byte_count, $platform, $eol, $handle, 
-	$directory, $bytes_left, $buffer_size, $new_data, $old_data, 
+	$directory, $bytes_left, $new_data, $old_data, 
 	$current_buffer, $changed, $store, $disposition, $headers, 
         $mime_type, $convert, $field, $file, $new_name, $full_path);
 

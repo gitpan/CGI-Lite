@@ -1,7 +1,7 @@
-CGI::Lite v2.03
+CGI::Lite v2.03_01
 ----------------
 
-Released: 26th May 2014
+Released: 13th Jun 2014
 
 
 DESCRIPTION
@@ -15,11 +15,12 @@ yourself with the actual details behind the decoding process.
 NEW IN THIS VERSION
 -------------------
 
-This is a bug-fix release. These bugs from rt.cpan.org have been fixed:
-6180, 8212, 16236, 29053, 32329, 34827, 38448, 41666.
+This is a developer release. Some of the upload tests were failling for
+Microsoft users and the test suite has been modified as a result.
 
-Additionally a test suite has been created.
+The documentation has also seen minor updates to reflect the change of
+maintainer.
 
 See the CHANGES file for full history.
 
-$Id: README,v 1.2 2014/05/26 15:46:01 pete Exp $
+$Id: README,v 1.3 2014/06/13 14:11:43 pete Exp $
