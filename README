@@ -1,7 +1,7 @@
-CGI::Lite v2.03_01
+CGI::Lite v2.03_02
 ----------------
 
-Released: 13th Jun 2014
+Released: 17th Jun 2014
 
 
 DESCRIPTION
@@ -15,12 +15,10 @@ yourself with the actual details behind the decoding process.
 NEW IN THIS VERSION
 -------------------
 
-This is a developer release. Some of the upload tests were failling for
-Microsoft users and the test suite has been modified as a result.
-
-The documentation has also seen minor updates to reflect the change of
-maintainer.
+This is a developer release. Some of the upload tests were failling
+for Microsoft users and the test suite and the module itself have been
+modified as a result.
 
 See the CHANGES file for full history.
 
-$Id: README,v 1.3 2014/06/13 14:11:43 pete Exp $
+$Id: README,v 1.4 2014/06/17 14:09:24 pete Exp $

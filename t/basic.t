@@ -10,9 +10,9 @@
 #        NOTES:  ---
 #       AUTHOR:  Pete Houston (cpan@openstrike.co.uk)
 #      COMPANY:  Openstrike
-#      VERSION:  $Id: basic.t,v 1.2 2014/06/13 14:06:01 pete Exp $
+#      VERSION:  $Id: basic.t,v 1.3 2014/06/17 14:10:24 pete Exp $
 #      CREATED:  13/05/14 21:36:53
-#     REVISION:  $Revision: 1.2 $
+#     REVISION:  $Revision: 1.3 $
 #===============================================================================
 
 use strict;
@@ -24,7 +24,7 @@ use lib './lib';
 
 BEGIN { use_ok ('CGI::Lite') }
 
-is ($CGI::Lite::VERSION, '2.03_01', 'Version test');
+is ($CGI::Lite::VERSION, '2.03_02', 'Version test');
 is (CGI::Lite::Version (), $CGI::Lite::VERSION, 'Version subroutine test');
 
 my $cgi = CGI::Lite->new ();

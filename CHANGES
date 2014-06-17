@@ -1,3 +1,9 @@
+* v2.03_02
+
+The uploads have had a minor change which may solve the windows size
+difference failures. More diagnostics were added to the failures if it
+does not.
+
 * v2.03_01
 
 The test multi-part upload data in the test suite has been fixed to have

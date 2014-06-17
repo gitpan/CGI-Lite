@@ -1,7 +1,7 @@
 ##++
-##     CGI Lite v2.03_01
+##     CGI Lite v2.03_02
 ##     Last modified: 13 Jun 2014 (see CHANGES)
-##     $Id: Lite.pm,v 1.3 2014/06/13 14:05:16 pete Exp $
+##     $Id: Lite.pm,v 1.5 2014/06/17 14:13:46 pete Exp $
 ##
 ##     Copyright (c) 1995, 1996, 1997 by Shishir Gundavaram
 ##     All Rights Reserved
@@ -488,7 +488,7 @@ require Exporter;
 ## Global Variables
 ##--
 
-$CGI::Lite::VERSION = '2.03_01';
+$CGI::Lite::VERSION = '2.03_02';
 
 ##++
 ##  Start
@@ -1135,6 +1135,8 @@ sub _store
 	    $$info =~ s/\015\012/$eol/og  if ($platform ne 'PC');
 	    $$info =~ s/\015/$eol/og      if ($platform ne 'Mac');
 	    $$info =~ s/\012/$eol/og      if ($platform ne 'Unix');
+	} else {
+		binmode $handle;
 	}
 
     	print $handle $$info;
