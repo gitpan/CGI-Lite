@@ -1,3 +1,8 @@
+* v2.04
+
+Minor documentation fixes and explanation of the proposed split into
+legacy/trunk branches. No code changes from 2.03_02.
+
 * v2.03_02
 
 The uploads have had a minor change which may solve the windows size

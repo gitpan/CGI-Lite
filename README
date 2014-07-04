@@ -1,7 +1,7 @@
-CGI::Lite v2.03_02
+CGI::Lite v2.04
 ----------------
 
-Released: 17th Jun 2014
+Released: 4th Jul 2014
 
 
 DESCRIPTION
@@ -15,10 +15,11 @@ yourself with the actual details behind the decoding process.
 NEW IN THIS VERSION
 -------------------
 
-This is a developer release. Some of the upload tests were failling
-for Microsoft users and the test suite and the module itself have been
-modified as a result.
+Only documentation changes since 2.03_02.
+
+The uploads have had a bug fix since 2.03 which should allow successful
+binary uploads for MS Windows servers.
 
 See the CHANGES file for full history.
 
-$Id: README,v 1.4 2014/06/17 14:09:24 pete Exp $
+$Id: README,v 1.5 2014/07/04 11:23:37 pete Exp $

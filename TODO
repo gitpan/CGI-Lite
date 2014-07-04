@@ -1,5 +1,10 @@
 Tasks to perform:
 
+Create a legacy branch which will be 2.x and maintain backwards
+compatibility.
+Start a 3.x branch (trunk, really) which will be a code clean-up and
+removal of deprecated features. It will require at least 5.6.0 (for
+lexical filehandles)
 Consider adding a routine to set cookies.
 Decide whether to tighten validation of cookie names.
 Decide on the appropriate action to take when presented with multiple

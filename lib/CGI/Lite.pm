@@ -1,7 +1,7 @@
 ##++
-##     CGI Lite v2.03_02
+##     CGI Lite v2.04
 ##     Last modified: 13 Jun 2014 (see CHANGES)
-##     $Id: Lite.pm,v 1.5 2014/06/17 14:13:46 pete Exp $
+##     $Id: Lite.pm,v 1.6 2014/07/04 11:15:04 pete Exp $
 ##
 ##     Copyright (c) 1995, 1996, 1997 by Shishir Gundavaram
 ##     All Rights Reserved
@@ -21,19 +21,23 @@ CGI::Lite - Process and decode WWW forms and cookies
 
     use CGI::Lite;
 
-    $cgi = new CGI::Lite;
+    $cgi = CGI::Lite->new ();
 
     $cgi->set_platform ($platform);
     
-        where $platform can be one of (case insensitive):
-        Unix, Windows, Windows95, DOS, NT, PC, Mac or Macintosh
+        # where $platform can be one of (case insensitive):
+        # Unix, Windows, Windows95, DOS, NT, PC, Mac or Macintosh
 
-    $cgi->set_file_type ('handle' or 'file');
-    $cgi->add_timestamp (0, 1 or 2);	
+    $cgi->set_file_type ($fh);
+	
+        # where $fh is one of 'handle' or 'file'
 
-        where 0 = no timestamp
-              1 = timestamp all files (default)
-              2 = timestamp only if file exists
+    $cgi->add_timestamp ($tsflag);	
+
+        # where $tsflag takes one of these values
+        #       0 = no timestamp
+        #       1 = timestamp all files (default)
+        #       2 = timestamp only if file exists
 
     $cgi->filter_filename (\&subroutine);
 
@@ -51,7 +55,7 @@ CGI::Lite - Process and decode WWW forms and cookies
     $form = $cgi->parse_form_data;
     %form = $cgi->parse_form_data;
 
-    or
+    # or
 
     $form = $cgi->parse_form_data ('GET', 'HEAD' or 'POST');
 
@@ -68,8 +72,8 @@ CGI::Lite - Process and decode WWW forms and cookies
 
     $cgi->print_data;
 
-    $cgi->print_form_data;   (deprecated as of v1.8)
-    $cgi->print_cookie_data; (deprecated as of v1.8)
+    $cgi->print_form_data;   # (deprecated as of v1.8)
+    $cgi->print_cookie_data; # (deprecated as of v1.8)
 
     $new_string = $cgi->wrap_textarea ($string, $length);
 
@@ -397,10 +401,10 @@ I<Return Value>
 
 =item B<escape_dangerous_chars>
 
-You can use this method to "escape" any dangerous meta-characters. The
-use of this function is strongly discouraged. See
-http://use.perl.org/~cbrooks/journal/10542 and
-http://msgs.securepoint.com/cgi-bin/get/bugtraq0302/94.html for an
+You can use this method to "escape" any dangerous meta-characters. B<The
+use of this function is strongly discouraged.> See
+L<https://web.archive.org/web/20100627014535/http://use.perl.org/~cbrooks/journal/10542>
+and L<http://www.securityfocus.com/archive/1/311414> for an
 advisory by Ronald F. Guilmette. Ronald's patch to make this function
 more safe is applied, but as has been pointed out on the bugtraq
 mailing list, it is still much better to run no external shell at all
@@ -413,18 +417,40 @@ Escaped string.
 
 =back
 
+=head1 VERSIONS
+
+This module has maintained backwards compatibility with versions of
+Perl back to 5.002 for a very long time. Such stability is a welcome
+attribute but it restricts the code by disallowing access to features
+introduced into the language since 1996.
+
+With this in mind, there will be two maintained branches of this module
+going forwards. The 2.x branch will retain the backwards compatibility
+but will not have any new features introduced. Changes to this branch
+will be bug fixes only. The new 3.x branch (unwritten as of July 2014)
+will be the main release and will require a more modern perl (version
+still to be determined but 5.6.0 would be the bare minumum). That 3.x
+branch will have new features and will remove some of the legacy code
+such as the B<print_form_data> method which has been deprecated for more
+than a decade.
+
+Requests for new features in the proposed 3.x branch should be made via
+the request tracker at L<https://rt.cpan.org/Public/Dist/Display.html?Name=CGI-Lite>
+
 =head1 SEE ALSO
 
-If you're looking for more comprehensive CGI modules, you can either 
-use the CGI::* modules or CGI.pm. Both are maintained by Dr. Lincoln
-Stein I<(lstein@genome.wi.mit.edu)> and can be found at your local
-CPAN mirror and at his Web site:
+If you're looking for more comprehensive CGI modules, you can either use
+the CGI::* modules or L<CGI.pm|CGI>. Both are maintained by
+L<Dr. Lincoln Stein|http://search.cpan.org/CPAN/authors/id/L/LD/LDS/>
+and can be found at your local CPAN mirror.
 
-I<http://www-genome.wi.mit.edu/WWW/tools/scripting>
+L<CGI::Lite::Request> uses similar method names to CGI.pm thus allowing
+easy transition between them. It uses this module as a
+dependency.
 
 =head1 MAINTAINER
 
-Maintenance of this module has now been taken over by Pete Houston
+Maintenance of this module as of May 2014 has been taken over by Pete Houston
 <cpan@openstrike.co.uk>.
 
 =head1 ACKNOWLEDGMENTS
@@ -488,7 +514,7 @@ require Exporter;
 ## Global Variables
 ##--
 
-$CGI::Lite::VERSION = '2.03_02';
+$CGI::Lite::VERSION = '2.04';
 
 ##++
 ##  Start
