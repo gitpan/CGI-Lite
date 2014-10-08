@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               CGI-Lite
-version:            2.04_02
+version:            2.04_04
 abstract:           Process and decode WWW forms and cookies
 author:
     - Pete Houston (cpan@openstrike.co.uk)
@@ -12,12 +12,8 @@ build_requires:
     Test::More:  0
 requires:  {}
 resources:
-    bugtracker:
-        web:  http://rt.cpan.org/Public/Dist/Display.html?Name=CGI-Lite
-    repository:
-        type:  git
-        url:   git://github.com/openstrike/perl-CGI-Lite.git
-        web:   https://github.com/openstrike/perl-CGI-Lite
+    bugtracker:  http://rt.cpan.org/Public/Dist/Display.html?Name=CGI-Lite
+    repository:  https://github.com/openstrike/perl-CGI-Lite
 no_index:
     directory:
         - t
@@ -25,4 +21,4 @@ no_index:
 generated_by:       ExtUtils::MakeMaker version 6.57_05
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
-    version:  2
+    version:  1.4
